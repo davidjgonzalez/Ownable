@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["David Gonzalez"]
   s.email       = ["davidjgonzalez@gmail.com"]
-  s.homepage    = "http://http://github.com/emp29/Ownable"
+  s.homepage    = "http://github.com/emp29/Ownable"
   s.summary     = "Model ownership with Rails 3"
   s.description = "Model ownership with Rails 3"
 
