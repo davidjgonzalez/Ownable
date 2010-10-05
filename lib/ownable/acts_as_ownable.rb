@@ -16,39 +16,36 @@ module Ownable
 
     end #ClassMethods
      
-    # Add owned_by? and owned_by_id? to ActiveRecord subclasses
+    # Add owned_by? and belongs_to? to ActiveRecord subclasses
     module InstanceMethods
 
-       def owned_by? candidate
-          owner = find_owner
+      def owned_by? candidate
+        owner = find_owner
 
-          return false if (owner.nil? || candidate.nil?)
-          candidate == owner
-        end
-
-        def owned_by_id? candidate_id
-          owner = find_owner
-          
-          return false if (owner.nil? || candidate_id.nil?)
-          candidate_id == owner.id
-        end
+        return false if (owner.nil? || candidate.nil?)
+        return candidate == owner.id if candidate.is_a? Fixnum
+        return candidate == owner          
+      end
         
+      def belongs_to? candidate
+        owned_by? candidate
+      end
+      
+      private 
         
-        private 
-        
-        def find_owner
-          owner = self
-
-          self.ownable_through.each do |class_name|          
-            begin 
-              owner = owner.send class_name
-            rescue
-              owner = nil
-            end
-          end
-          
-          return owner
-        end
+      def find_owner
+        owner = self  
+            
+        self.ownable_through.each do |class_name|          
+          begin       
+            owner =   owner.send class_name
+          rescue      
+            owner =   nil
+          end         
+        end           
+            
+        return owner  
+      end             
       
     end #InstanceMethods
     
