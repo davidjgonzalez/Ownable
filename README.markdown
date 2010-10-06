@@ -11,7 +11,11 @@ Ownable exposes an instance method on ActiveRecord objects that declare themselv
 For example, assume the associations:
 
 	User has_many Orders has_one Invoice has_many Payments
-	
+
+or in the opposite direction:
+
+	Payments belongs_to Invoice belongs_to Orders belongs_to User
+
 Determine if a User "owns" a particular Payment object
 	
 	Rather than manually defining and then checking the association between User and Payment like:
@@ -20,6 +24,18 @@ Determine if a User "owns" a particular Payment object
 	you can use Ownable for a much shorter and simpler syntax:
 	   @payment.owned_by? current_user # => true/false
 
+This gem is most helpful when many association steps exist between Models, such as:
+
+	A belongs_to B belongs_to ... belongs_to Y belongs_to Z
+
+And the ownership check can be written short hand via Ownable as:
+
+	@a.owned_by? @z # => true/false
+
+or
+
+	@a.belongs_to? @z # => true/false
+	
 ## INSTALLATION
   
 Ownable is currently available only in Gem form and requires version >= 3.0 of Rails.
