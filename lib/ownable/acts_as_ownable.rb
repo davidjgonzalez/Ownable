@@ -11,7 +11,7 @@ module Ownable
       def acts_as_ownable(options = {})
         cattr_accessor :ownable_through 
         
-        self.ownable_through = options[:through] || [':user']
+        self.ownable_through = options[:through] || ['user']
       end
 
     end #ClassMethods
@@ -38,9 +38,9 @@ module Ownable
             
         self.ownable_through.each do |class_name|          
           begin       
-            owner =   owner.send class_name
+            owner = owner.send class_name
           rescue      
-            owner =   nil
+            owner = nil
           end         
         end           
             
